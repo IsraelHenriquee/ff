@@ -1,0 +1,23 @@
+String jsonRawText,
+  List<String> dateFields,
+) {
+  /// MODIFY CODE ONLY BELOW THIS LINE
+
+// Decodifica o JSON bruto em uma lista de Maps
+  List<dynamic> jsonList = jsonDecode(jsonRawText);
+
+  // Itera sobre cada objeto na lista e formata os campos de data
+  for (var jsonMap in jsonList) {
+    // Verifica se o objeto atual é um Map
+    if (jsonMap is Map<String, dynamic>) {
+      // Formata os campos de data
+      for (String field in dateFields) {
+        if (jsonMap.containsKey(field) && jsonMap[field] != null) {
+          jsonMap[field] = DateTime.parse(jsonMap[field]).toUtc();
+        }
+      }
+    }
+  }
+
+  // Retorna a lista modificada
+  return List<Map<String, dynamic>>.from(jsonList);
