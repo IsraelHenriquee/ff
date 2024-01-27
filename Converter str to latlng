@@ -1,0 +1,35 @@
+List<dynamic> stringtolat(
+  String jsonString,
+  List<String> camposCoordenadas,
+) {
+  /// MODIFY CODE ONLY BELOW THIS LINE
+
+  List<dynamic> jsonList = jsonDecode(jsonString);
+
+  // Itera sobre cada objeto na lista e atualiza os campos de coordenadas
+  for (var jsonMap in jsonList) {
+    // Verifica se o objeto atual é um Map
+    if (jsonMap is Map<String, dynamic>) {
+      for (var campo in camposCoordenadas) {
+        if (jsonMap.containsKey(campo) && jsonMap[campo] is String) {
+          String coordenadaString = jsonMap[campo];
+          // Extrair latitude e longitude usando expressões regulares
+          final match = RegExp(r'LatLng\(lat: (.*), lng: (.*)\)')
+              .firstMatch(coordenadaString);
+          if (match != null) {
+            double lat = double.parse(match.group(1)!);
+            double lng = double.parse(match.group(2)!);
+            // Atualizar o campo com uma nova instância de LatLng
+            jsonMap[campo] =
+                LatLng(lat, lng); // Converte para o formato 'LatLng(lat, lng)'
+          }
+        }
+      }
+    }
+  }
+
+  // Retorna a lista de Maps modificada
+  return List<Map<String, dynamic>>.from(jsonList);
+
+  /// MODIFY CODE ONLY ABOVE THIS LINE
+}
