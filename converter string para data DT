@@ -1,4 +1,5 @@
-String jsonRawText,
+List<dynamic> converterJsonData(
+  String jsonRawText,
   List<String> dateFields,
 ) {
   /// MODIFY CODE ONLY BELOW THIS LINE
@@ -21,3 +22,6 @@ String jsonRawText,
 
   // Retorna a lista modificada
   return List<Map<String, dynamic>>.from(jsonList);
+
+  /// MODIFY CODE ONLY ABOVE THIS LINE
+}
